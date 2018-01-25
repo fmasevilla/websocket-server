@@ -4,15 +4,15 @@ var io = require('socket.io')(http);
 var redis = require('redis').createClient({redis_url:'redis://127.0.0.1:6379'});
 var got = require('got');
 
-// app.get('/sucket', function(req, res){
-  // res.sendFile(__dirname + '/index.html');
-// });
+app.get('/sucket', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
 
 io.on('connection', function(socket){
-//   console.log('a user connected');
-//   socket.on('disconnect', function(){
-//     console.log('user disconnected');
-//   });
+  console.log('a user connected');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
 //   socket.on('chat', function(msg){
 //   	console.log('message: ' + data["message"]);
 //     console.log('auth_token: ' + data["auth_token"]);
@@ -23,8 +23,8 @@ io.on('connection', function(socket){
 
 redis.on('message', function(channel, message){
 	var info = JSON.parse(message);
-	var new_channel = (channel + "/" + info["chat_channel_id"]);
-	console.log("info: " + info["chat_channel_id"]);
+	var new_channel = (channel + "/" + info["message"]["chat_channel_id"]);
+	console.log("info: " + info["message"]["chat_channel_id"]);
 	console.log("channel: " + channel);
 	io.sockets.emit(new_channel, info);
 });
