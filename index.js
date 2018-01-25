@@ -4,9 +4,9 @@ var io = require('socket.io')(http);
 var redis = require('redis').createClient({redis_url:'redis://127.0.0.1:6379'});
 var got = require('got');
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+// app.get('/sucket', function(req, res){
+  // res.sendFile(__dirname + '/index.html');
+// });
 
 io.on('connection', function(socket){
 //   console.log('a user connected');
