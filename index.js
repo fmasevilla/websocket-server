@@ -13,23 +13,21 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-//   socket.on('chat', function(msg){
-//   	console.log('message: ' + data["message"]);
-//     console.log('auth_token: ' + data["auth_token"]);
-//     console.log('chat_channel_id: ' + data["chat_channel_id"]);
-//   	sendMessage(msg);
-//   });
 });
 
 redis.on('message', function(channel, message){
 	var info = JSON.parse(message);
-	var new_channel = (channel + "/" + info["message"]["chat_channel_id"]);
-	console.log("info: " + info["message"]["chat_channel_id"]);
-	console.log("channel: " + channel);
-	io.sockets.emit(new_channel, info);
+	if (channel === 'chat') {
+		var new_channel = (channel + "/" + info["message"]["chat_channel_id"]);
+		io.sockets.emit(new_channel, info);
+	} else if (channel === 'now')  {
+		var new_channel = (channel + "/" + info["booking"]["student_id"]);
+		io.sockets.emit(new_channel, info);
+	}
 });
 
 redis.subscribe('chat');
+redis.subscribe('now');
 
 http.listen(8081, function(){
   console.log('listening on *:8081');
