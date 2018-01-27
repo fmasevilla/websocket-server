@@ -24,12 +24,16 @@
 <script>
   $(function () {
     var socket = io();
-    socket.on('chat/12', function(data){
+    socket.on('chat', function(data){
       console.log(data);
-      var new_data = { message: data["message"], auth_token: "da783b62081934217a567e3db50ffdb1", chat_channel_id: data["chat_channel_id"] }
-      socket.emit('chat', new_data);
       $('#m').val('');
     });
+
+    socket.on('now', function(data){
+      console.log(data);
+      $('#m').val('');
+    });
+
     $('form').submit(function(){
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
