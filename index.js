@@ -21,7 +21,7 @@ redis.on('message', function(channel, message){
 		var new_channel = (channel + "/" + info["message"]["chat_channel_id"]);
 		io.sockets.emit(new_channel, info);
 	} else if (channel === 'now')  {
-		var new_channel = (channel + "/" + info["booking"]["student_id"]);
+		var new_channel = (channel + "/" + info["student_id"]);
 		io.sockets.emit(new_channel, info);
 	}
 });
