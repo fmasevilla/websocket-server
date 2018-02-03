@@ -16,19 +16,23 @@ io.on('connection', function(socket){
 });
 
 redis.on('message', function(channel, message){
-	var info = JSON.parse(message);
 	if (channel === 'chat') {
+		var info = JSON.parse(message);
 		var new_channel = (channel + "/" + info["message"]["chat_channel_id"]);
 		io.sockets.emit(new_channel, info);
 	} else if (channel === 'now')  {
+		var info = JSON.parse(message);
 		var new_channel = (channel + "/" + info["student_id"]);
 		io.sockets.emit(new_channel, info);
+	} else if (channel === 'teacher_status') {
+		io.sockets.emit(channel, message);
 	}
 });
 
 redis.subscribe('chat');
 redis.subscribe('now');
+redis.subscribe('teacher_status');
 
-http.listen(8081, function(){
-  console.log('listening on *:8081');
+http.listen(8082, function(){
+  console.log('listening on *:8082');
 });
