@@ -33,6 +33,6 @@ redis.subscribe('chat');
 redis.subscribe('now');
 redis.subscribe('teacher_status');
 
-http.listen(8082, function(){
-  console.log('listening on *:8082');
+http.listen(8081, function(){
+  console.log('listening on *:8081');
 });
